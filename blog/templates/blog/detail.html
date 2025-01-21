@@ -10,7 +10,7 @@
         <div class="container">
             <header class="blog-post-header">
                 <h2 class="title mb-2">{{ post.title }}</h2>
-                <div class="meta mb-3" dir="ltr"><span class="date">{{ post.publish_time|naturaltime }}</span><span><a href="{% url 'blog:share_post' post.pk %}">share</a></span></div>
+                <div class="meta mb-3" dir="ltr"><span class="date">{{ post.publish_time|naturaltime }}</span><span><a href="{% url 'blog:share_post' post.pk %}">share</a></span><span>{{ post.author }}</span></div>
             </header>
 
             <div class="blog-post-body">

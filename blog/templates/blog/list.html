@@ -10,10 +10,10 @@
             <div class="media">
                 <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="{{ post.thumbnail.url }}" alt="image">
                 <div class="media-body">
-                    <h3 class="title mb-1"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                    <h3 class="title mb-1 pr-5" style="text-align: right;"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
                     <div class="meta mb-1"><span class="date">{{ post.updated_at }}</span></div>
                     <div class="intro">{{ post.lead }}</div>
-                    <a class="more-link" href="{{ post.get_absolute_url }}">Read more &rarr;</a>
+                    <a class="more-link" href="{{ post.get_absolute_url }}">ادامه مطلب &rarr;</a>
                 </div><!--//media-body-->
             </div><!--//media-->
         </div><!--//item-->

@@ -4,9 +4,9 @@ from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView , View
+from django.views.generic import ListView, DetailView, View, CreateView
 
-from blog.forms import ShareForm , CommentForm
+from blog.forms import ShareForm , CommentForm , CreatePostForm
 from blog.models import Post, Category , Comment
 
 
@@ -14,7 +14,7 @@ from blog.models import Post, Category , Comment
 class PostListView(ListView):
     model = Post
     context_object_name = 'posts'
-    queryset = Post.objects.filter(status=Post.StatusChoices.PUBLISHED , publish_time__lte=timezone.now())
+    queryset = Post.objects.filter(status=Post.StatusChoices.PUBLISHED)
     template_name = 'blog/list.html'
     paginate_by = 4
 
@@ -48,6 +48,17 @@ class PostDetailView(DetailView):
             context['comment_form'] = form
             return self.render_to_response(context=context)
 
+
+
+class CreatePostView(CreateView):
+    model = Post
+    template_name = 'blog/create.html'
+    form_class = CreatePostForm
+    success_url = reverse_lazy('blog:list')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
 

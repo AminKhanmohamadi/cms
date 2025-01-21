@@ -1,7 +1,10 @@
 from django.db import models
-from django.urls import reverse_lazy
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+from django.utils.text import slugify
+from autoslug import AutoSlugField
 # Create your models here.
 
 
@@ -49,7 +52,18 @@ class Post(models.Model):
         ordering = ['-publish_time']
 
     def get_absolute_url(self):
-        return reverse_lazy('blog:detail', kwargs={'year': self.publish_time.year , 'month': self.publish_time.month ,'day':self.publish_time.day , 'slug': self.slug})
+        local_publish_time = timezone.localtime(self.publish_time)
+        return reverse('blog:detail', kwargs={
+            'year': local_publish_time.year,
+            'month': local_publish_time.month,
+            'day': local_publish_time.day,
+            'slug': self.slug
+        })
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title , allow_unicode=True)
+        super().save(*args, **kwargs)
 
 
 
