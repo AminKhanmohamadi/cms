@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 # Create your models here.
@@ -39,9 +40,11 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     class Meta:
         verbose_name = _('post')
         verbose_name_plural = _('posts')
         ordering = ['-publish_time']
 
+    def get_absolute_url(self):
+        return reverse_lazy('detail', kwargs={'year': self.publish_time.year , 'month': self.publish_time.month ,'day':self.publish_time.day , 'slug': self.slug})
