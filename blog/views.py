@@ -1,27 +1,39 @@
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView , View
 
 from blog.models import Post, Category
 
 
 # Create your views here.
-
-def list_view(request):
+class PostListView(ListView):
+    model = Post
+    context_object_name = 'posts'
     queryset = Post.objects.filter(status=Post.StatusChoices.PUBLISHED , publish_time__lte=timezone.now())
-    return render(request , 'blog/list.html' , {'posts': queryset})
+    template_name = 'blog/list.html'
+    paginate_by = 4
+
+
+class PostDetailView(DetailView):
+    model = Post
+    context_object_name = 'post'
+    template_name = 'blog/detail.html'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Post, slug=self.kwargs['slug'] , status=Post.StatusChoices.PUBLISHED , publish_time__year=self.kwargs['year'] , publish_time__month=self.kwargs['month'] , publish_time__day=self.kwargs['day'])
 
 
 
-def detail_view(request, **kwargs):
-    year = kwargs.get('year')
-    month = kwargs.get('month')
-    day = kwargs.get('day')
-    slug = kwargs.get('slug')
-    post = get_object_or_404(Post , slug=slug , status=Post.StatusChoices.PUBLISHED , publish_time__year=year , publish_time__month=month , publish_time__day=day)
-    return render(request , 'blog/detail.html' , {'post': post})
+class CategoryListView(ListView):
+    model = Category
+    context_object_name = 'categories'
+    template_name = 'blog/categories.html'
 
 
-def categories_view(request):
-    queryset = Category.objects.all()
-    return render(request , 'blog/categories.html' , {'categories': queryset})
+class CategoryDetailView(View):
+    def get(self, request, category_id):
+        category = get_object_or_404(Category, id=category_id)
+        posts = Post.objects.filter(category=category)
+        return render(request, 'blog/list.html', {'posts': posts})
+

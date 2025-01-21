@@ -49,4 +49,4 @@ class Post(models.Model):
         ordering = ['-publish_time']
 
     def get_absolute_url(self):
-        return reverse_lazy('detail', kwargs={'year': self.publish_time.year , 'month': self.publish_time.month ,'day':self.publish_time.day , 'slug': self.slug})
+        return reverse_lazy('blog:detail', kwargs={'year': self.publish_time.year , 'month': self.publish_time.month ,'day':self.publish_time.day , 'slug': self.slug})

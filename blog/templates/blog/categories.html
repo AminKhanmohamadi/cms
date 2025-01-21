@@ -10,7 +10,7 @@
             <div class="media">
                 <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="{{ category.thumbnail.url }}" alt="image">
                 <div class="media-body">
-                    <h3 class="title mb-1"><a href="#">{{ category.title }}</a></h3>
+                    <h3 class="title mb-1"><a href="{% url 'blog:categories-list' category.id  %}">{{ category.title }}</a></h3>
                     <a class="more-link" href="#">Read more &rarr;</a>
                 </div><!--//media-body-->
             </div><!--//media-->
