@@ -50,3 +50,22 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse_lazy('blog:detail', kwargs={'year': self.publish_time.year , 'month': self.publish_time.month ,'day':self.publish_time.day , 'slug': self.slug})
+
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE , verbose_name=_('post') , related_name='comments' , null=True)
+    name = models.CharField(verbose_name=_('name') , max_length=255) #TODO: fix foreignkey to user model
+    email = models.EmailField(verbose_name=_('email'))
+    body = models.TextField(verbose_name=_('body'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created at'))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('updated at'))
+    approved = models.BooleanField(default=True, verbose_name=_('approved'))
+
+    def __str__(self):
+        return self.name
+
+
+    class Meta:
+        verbose_name = _('comment')
+        verbose_name_plural = _('comments')
