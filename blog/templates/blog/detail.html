@@ -1,5 +1,10 @@
 {% extends '_base.html' %}
 {% load humanize %}
+
+{% block title %}
+	{{ post.title|truncatewords:2 }}
+{% endblock %}
+
 {% block content %}
     <article class="blog-post px-3 py-5 p-md-5" dir="rtl" style="text-align: right;">
         <div class="container">
@@ -10,7 +15,7 @@
 
             <div class="blog-post-body">
                 <figure class="blog-banner">
-                    <a href="https://made4dev.com"><img class="img-fluid" src="{{ post.thumbnail.url }}" alt="image"></a>
+                    <a href="{{ post.get_absolute_url }}"><img class="img-fluid" src="{{ post.thumbnail.url }}" alt="image"></a>
                     <figcaption class="mt-2 text-center image-caption">Image Credit: <a href="#" target="_blank">{{ post.author }}</a></figcaption>
                 </figure>
                 <p>{{ post.body }}</p>

@@ -1,8 +1,12 @@
 {% extends '_base.html' %}
 
+{% block title %}
+	لیست مقالات
+{% endblock %}
+
 {% block content %}
     {% for post in posts %}
-        <div class="item mb-5">
+        <div class="item mb-5" dir="rtl">
             <div class="media">
                 <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="{{ post.thumbnail.url }}" alt="image">
                 <div class="media-body">
