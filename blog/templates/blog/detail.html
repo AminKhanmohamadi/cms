@@ -24,26 +24,26 @@
             <div class="container mt-5">
                 <!-- Comments Section -->
                 <div class="comments-section">
-                    <h3 class="mb-4">نظرات ({{ comments.count }})</h3>
+        <h3 class="mb-4 text-center">نظرات ({{ comments.count }})</h3>
 
-                    {% if comments %}
-                        <ul class="list-group">
-                            {% for comment in comments %}
-                                <li class="list-group-item">
-                                    <div class="d-flex justify-content-between">
-                                        <strong>{{ comment.name }}</strong>
-                                        <small class="text-muted">{{ comment.created_at|date:"d M Y H:i" }}</small>
-                                    </div>
-                                    <p class="mb-0 mt-2">{{ comment.body }}</p>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <div class="alert alert-info" role="alert">
-                            هنوز نظری برای این پست ثبت نشده است.
+        {% if comments %}
+            <ul class="list-group">
+                {% for comment in comments %}
+                    <li class="list-group-item shadow-sm mb-3 rounded">
+                        <div class="d-flex justify-content-between">
+                            <strong class="text-dark">{{ comment.name }}</strong>
+                            <small class="text-muted">{{ comment.created_at|date:"d M Y H:i" }}</small>
                         </div>
-                    {% endif %}
-                </div>
+                        <p class="mt-2">{{ comment.body }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                هنوز نظری برای این پست ثبت نشده است.
+            </div>
+        {% endif %}
+    </div>
 
                 <div class="comment-form mt-5">
                     <h3 class="mb-4">نظر خود را ارسال کنید</h3>
