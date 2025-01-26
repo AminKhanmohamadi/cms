@@ -66,6 +66,7 @@ class CategoryListView(ListView):
     model = Category
     context_object_name = 'categories'
     template_name = 'blog/categories.html'
+    queryset = Category.objects.filter(active=True)
 
 
 class CategoryDetailView(View):

@@ -1,10 +1,12 @@
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.text import slugify
-from autoslug import AutoSlugField
+from django.utils.translation import gettext_lazy as _
+
+
 # Create your models here.
 
 
@@ -83,3 +85,7 @@ class Comment(models.Model):
     class Meta:
         verbose_name = _('comment')
         verbose_name_plural = _('comments')
+
+
+
+
