@@ -70,6 +70,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE , verbose_name=_('user'))
     post = models.ForeignKey(Post, on_delete=models.CASCADE , verbose_name=_('post') , related_name='comments' , null=True)
     name = models.CharField(verbose_name=_('name') , max_length=255) #TODO: fix foreignkey to user model
     email = models.EmailField(verbose_name=_('email'))

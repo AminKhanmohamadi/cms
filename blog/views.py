@@ -1,5 +1,6 @@
 from logging import raiseExceptions
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -39,6 +40,7 @@ class PostDetailView(DetailView):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
+            comment.user= request.user
             comment.post = post
             comment.save()
             return redirect(post.get_absolute_url())
@@ -50,7 +52,7 @@ class PostDetailView(DetailView):
 
 
 
-class CreatePostView(CreateView):
+class CreatePostView(LoginRequiredMixin,CreateView):
     model = Post
     template_name = 'blog/create.html'
     form_class = CreatePostForm

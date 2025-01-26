@@ -141,3 +141,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+AUTH_USER_MODEL = 'accounts.SiteUser'
+LOGIN_REDIRECT_URL = 'blog:list'
+LOGOUT_REDIRECT_URL = 'blog:list'

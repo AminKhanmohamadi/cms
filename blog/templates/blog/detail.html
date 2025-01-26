@@ -10,13 +10,17 @@
         <div class="container">
             <header class="blog-post-header">
                 <h2 class="title mb-2">{{ post.title }}</h2>
-                <div class="meta mb-3" dir="ltr"><span class="date">{{ post.publish_time|naturaltime }}</span><span><a href="{% url 'blog:share_post' post.pk %}">share</a></span><span>{{ post.author }}</span></div>
+                <div class="meta mb-3" dir="ltr"><span class="date">{{ post.publish_time|naturaltime }}</span><span><a
+                        href="{% url 'blog:share_post' post.pk %}">share</a></span><span>{{ post.author }}</span></div>
             </header>
 
             <div class="blog-post-body">
                 <figure class="blog-banner">
-                    <a href="{{ post.get_absolute_url }}"><img class="img-fluid" src="{{ post.thumbnail.url }}" alt="image"></a>
-                    <figcaption class="mt-2 text-center image-caption">Image Credit: <a href="#" target="_blank">{{ post.author }}</a></figcaption>
+                    <a href="{{ post.get_absolute_url }}"><img class="img-fluid" src="{{ post.thumbnail.url }}"
+                                                               alt="image"></a>
+                    <figcaption class="mt-2 text-center image-caption">Image Credit: <a href="#"
+                                                                                        target="_blank">{{ post.author }}</a>
+                    </figcaption>
                 </figure>
                 <p>{{ post.body }}</p>
             </div>
@@ -24,35 +28,38 @@
             <div class="container mt-5">
                 <!-- Comments Section -->
                 <div class="comments-section">
-        <h3 class="mb-4 text-center">نظرات ({{ comments.count }})</h3>
+                    <h3 class="mb-4 text-center">نظرات ({{ comments.count }})</h3>
 
-        {% if comments %}
-            <ul class="list-group">
-                {% for comment in comments %}
-                    <li class="list-group-item shadow-sm mb-3 rounded">
-                        <div class="d-flex justify-content-between">
-                            <strong class="text-dark">{{ comment.name }}</strong>
-                            <small class="text-muted">{{ comment.created_at|date:"d M Y H:i" }}</small>
+                    {% if comments %}
+                        <ul class="list-group">
+                            {% for comment in comments %}
+                                <li class="list-group-item shadow-sm mb-3 rounded">
+                                    <div class="d-flex justify-content-between">
+                                        <strong class="text-dark">{{ comment.name }}</strong>
+                                        <small class="text-muted">{{ comment.created_at|date:"d M Y H:i" }}</small>
+                                    </div>
+                                    <p class="mt-2">{{ comment.body }}</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="alert alert-info" role="alert">
+                            هنوز نظری برای این پست ثبت نشده است.
                         </div>
-                        <p class="mt-2">{{ comment.body }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <div class="alert alert-info" role="alert">
-                هنوز نظری برای این پست ثبت نشده است.
-            </div>
-        {% endif %}
-    </div>
-
-                <div class="comment-form mt-5">
-                    <h3 class="mb-4">نظر خود را ارسال کنید</h3>
-                    <form action="" method="post" class="needs-validation" novalidate>
-                        {% csrf_token %}
-                        {{ comment_form|crispy }}
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                    {% endif %}
                 </div>
+                {% if user.is_authenticated %}
+                    <div class="comment-form mt-5">
+                        <h3 class="mb-4">نظر خود را ارسال کنید</h3>
+                        <form action="" method="post" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            {{ comment_form|crispy }}
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info" role="alert">لطفا برای ارسال نظر <a href="{% url 'login' %}">وارد شوید</a></div>
+                {% endif %}
             </div><!--//container-->
     </article>
 {% endblock %}
